@@ -82,6 +82,7 @@ class Router
             'GET|/salarie/ideas/{id}/edit' => ['controller' => 'Salarie\\IdeaController', 'method' => 'edit', 'role' => 'salarie'],
             'GET|/salarie/ideas/{id}/pdf' => ['controller' => 'Salarie\\IdeaController', 'method' => 'downloadPdf', 'role' => 'salarie'],
             'POST|/salarie/ideas/{id}' => ['controller' => 'Salarie\\IdeaController', 'method' => 'update', 'role' => 'salarie'],
+            'PUT|/salarie/ideas/{id}' => ['controller' => 'Salarie\\IdeaController', 'method' => 'update', 'role' => 'salarie'],
             'POST|/salarie/ideas/{id}/delete' => ['controller' => 'Salarie\\IdeaController', 'method' => 'delete', 'role' => 'salarie'],
             
             // Evaluateur routes - Dashboard and evaluation system

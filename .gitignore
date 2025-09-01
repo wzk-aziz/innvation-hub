@@ -1,3 +1,4 @@
+# Debug and test files
 /check_admins.php
 /check_ideas.php
 /check_structure.php
@@ -10,3 +11,56 @@
 /test_eval.php
 /test_password.php
 /update_passwords.php
+
+# Dependencies
+/vendor
+
+# Environment and sensitive files
+.env
+.env.local
+.env.production
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+storage/logs/
+
+# Cache and temporary files
+cache/
+tmp/
+temp/
+
+# Upload directories (keep structure but ignore content)
+public/assets/uploads/*
+!public/assets/uploads/.gitkeep
+
+# Backup files
+*.bak
+*.backup
+*.sql.backup
+
+# Node modules (if using npm)
+node_modules/
+
+# Composer dependencies
+composer.lock
+
+# Local development files
+local/
+dev/

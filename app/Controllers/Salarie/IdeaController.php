@@ -300,32 +300,45 @@ class IdeaController
      */
     public function downloadPdf(int $id): void
     {
-        $idea = $this->ideaModel->findByIdWithDetails($id);
-        
-        if (!$idea || $idea['user_id'] !== Auth::user()['id']) {
-            $_SESSION['flash'] = ['type' => 'error', 'message' => 'Idée non trouvée'];
-            header('Location: /salarie/ideas');
+        try {
+            $idea = $this->ideaModel->findByIdWithDetails($id);
+            
+            if (!$idea || $idea['user_id'] !== Auth::user()['id']) {
+                $_SESSION['flash'] = ['type' => 'error', 'message' => 'Idée non trouvée'];
+                header('Location: /salarie/ideas');
+                exit;
+            }
+
+            // Get evaluations and feedback for this idea
+            $evaluations = $this->ideaModel->getEvaluations($id);
+            $feedback = $this->ideaModel->getFeedback($id);
+
+            // Generate PDF
+            $pdfService = new \App\Services\PdfService();
+            $pdf = $pdfService->generateIdeaPdf($idea, $evaluations, $feedback);
+
+            // Clean filename
+            $filename = 'Idee_' . preg_replace('/[^a-zA-Z0-9_-]/', '_', $idea['title']) . '_' . date('Y-m-d') . '.pdf';
+
+            // Clear any previous output
+            if (ob_get_length()) {
+                ob_clean();
+            }
+
+            // Set headers for PDF download
+            header('Content-Type: application/pdf');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            header('Cache-Control: private, max-age=0, must-revalidate');
+            header('Pragma: public');
+
+            // Output PDF and suppress any error output
+            echo $pdf->Output('', 'S');
+            exit;
+            
+        } catch (Exception $e) {
+            $_SESSION['flash'] = ['type' => 'error', 'message' => 'Erreur lors de la génération du PDF: ' . $e->getMessage()];
+            header('Location: /salarie/ideas/' . $id);
             exit;
         }
-
-        // Get evaluations and feedback for this idea
-        $evaluations = $this->ideaModel->getEvaluations($id);
-        $feedback = $this->ideaModel->getFeedback($id);
-
-        // Generate PDF
-        $pdfService = new \App\Services\PdfService();
-        $pdf = $pdfService->generateIdeaPdf($idea, $evaluations, $feedback);
-
-        // Clean filename
-        $filename = 'Idee_' . preg_replace('/[^a-zA-Z0-9_-]/', '_', $idea['title']) . '_' . date('Y-m-d') . '.pdf';
-
-        // Output PDF
-        header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        header('Cache-Control: private, max-age=0, must-revalidate');
-        header('Pragma: public');
-
-        echo $pdf->Output('', 'S');
-        exit;
     }
 }
