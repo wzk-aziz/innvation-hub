@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JavaScript Test</title>
+</head>
+<body>
+    <h1>JavaScript Test</h1>
+    
+    <p>Check browser console for JavaScript errors when you visit the themes page.</p>
+    
+    <script>
+        console.log("JavaScript test page loaded");
+        
+        // Test if the main themes page has JavaScript errors
+        window.addEventListener('load', function() {
+            console.log("Page fully loaded");
+            
+            // Check if the edit button click handlers are working
+            const editButtons = document.querySelectorAll('.edit-theme');
+            console.log("Found edit buttons:", editButtons.length);
+            
+            editButtons.forEach((button, index) => {
+                console.log(`Edit button ${index}:`, button);
+                
+                // Add a test click handler
+                button.addEventListener('click', function(e) {
+                    console.log("Edit button clicked!", this);
+                });
+            });
+        });
+    </script>
+    
+    <p><a href="/admin/themes">Go to Themes Page</a></p>
+    
+    <p>Instructions:</p>
+    <ol>
+        <li>Open browser developer tools (F12)</li>
+        <li>Go to Console tab</li>
+        <li>Click the link above to go to themes page</li>
+        <li>Try clicking an edit button</li>
+        <li>Check for any JavaScript errors in the console</li>
+    </ol>
+</body>
+</html>

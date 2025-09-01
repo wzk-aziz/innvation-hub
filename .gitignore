@@ -1,0 +1,12 @@
+/check_admins.php
+/check_ideas.php
+/check_structure.php
+/check_themes.php
+/debug_csrf.php
+/debug_eval.php
+/debug_session.php
+/fix_admin.php
+/migrate_ideas_columns.php
+/test_eval.php
+/test_password.php
+/update_passwords.php
